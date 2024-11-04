@@ -1,0 +1,55 @@
+syntax = "proto3"; 
+
+package proto;
+
+option go_package = ".";
+
+message User{
+    string name = 1;
+    int32 age = 2;
+    repeated string hobbies = 3;
+    repeated string friend = 4;
+}
+
+message GetUserRequest {
+    string name = 1;
+}
+
+message GetUserResponse {
+    User user = 1;
+}
+
+message AddUserRequest {
+    User user = 1;
+}
+
+message AddUserResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message UpdateUserRequest {
+    User updatedUser = 1;
+}
+
+message UpdateUserResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message DeleteUserRequest {
+    int32 userId = 1;
+}
+
+message DeleteUserResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+service UserService{
+    rpc GetUserInfo(stream GetUserRequest) returns (stream GetUserResponse);
+    rpc AddUser(stream AddUserRequest) returns (stream AddUserResponse);
+    rpc UpdateUser(stream UpdateUserRequest) returns (stream UpdateUserResponse);
+    rpc DeleteUser(stream DeleteUserRequest) returns (stream DeleteUserResponse);
+}
+
